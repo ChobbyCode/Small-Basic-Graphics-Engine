@@ -1,0 +1,843 @@
+'Basic 3D Engine & Libary By Pablo The Mokey
+'Version 0.1.0
+' 22/5/22 GMT England Time
+'PGL Public Edition Version 0.1.0
+'ChangeLog V 0.1.0: First Full Version, Scenes{Creates A Scene Of Sprites}, HideMouse() {Hide The Mouse}, ShowMouse(){Show the mouse},MouseMoveQ(){Returns True If The Mouse Moved Returns False If It Didn't},Rectangle Functions, Fill Cube
+'Cube works best with L = 35  to 45 with 40 being the best
+'FUNCTIONS YOU NEED TO KNOW! Cube(), Square(), X = {Your Value Here}, Y = {Your Value Here}, Parralagram(), Object = {Choose An Object/Shape}, C = {Any Colour You Want}, L = {Size Of Your Object}, Z = {Depth On Image Of Your Object}, NewSprite() {Takes Current Objcet Data And Converts To A Sprite Sheet In RAM}, MultiRedrawSprite() {Draws Your Sprite Sheet You Made In RAM}, Setup() {This setsup any advanced variables}, Loadsprfile() {Loads Spr file If Setup() Is Ran And A IDC Value Is Given}, SaveSprFile(){Saves Current Sprite In .data Format With A IDC Value Can Be Read Later}
+
+TextWindow.WriteLine("Using Pablo Graphics Libary Community Edition 6")
+X = 300
+Y = 300
+Z = 1 ' Z is just a scale but it can change other props too
+GX = 500
+GY = 500
+A = 35 
+L = 40
+C = "Black"
+Test = ""
+key = ""
+Sprite = 0
+Sprites_G1[0] = ""
+SpritesY_G1[0] = 300
+SpritesX_G1[0] = 300
+SpritesZ_G1[0] = Z
+PATH = Program.Directory + "\"
+'Title
+Title = "Empty PGL Community Window" ' <---- This is your program title
+GraphicsWindow.Title = Title + " | Graphics Libary Version 0.1.0| " '<---- This is also your title
+TextWindow.Title = Title + " | Output Window |"
+object = ""
+Turtle.Speed = 10
+Turtle.PenUp()
+Version = "0.1.0"
+'------------------------------------------------------------------
+'Project Settings
+Build = "0"
+AppVersion = "0.0.1"
+App = "My New Project"
+'------------------------------------------------------------------
+Start()
+'Code Above Needs To Be Run FIRST In Project Before Any More Code
+' You Can Change The Default Settings Above For Them To Be Applied First
+
+'Put Your Code Here
+'You Can Put Your Code Out Of Here But It Might Not Work
+' In This Gap Code Will Work Best
+
+'------------------------------------------------------------------
+
+'Leave Code Below At Bottom Of Project
+
+GraphicsWindow.KeyDown = keyGrabber '<-------- Change keyGrabber To Your Own Custom Function For Getting Key Input. The Key Grapper Is On Line 364 & Only Gets The Input.
+' You Can Add Your Own Code To It Such As Another Function That Runs After It. 
+' But Is Better To Delete The KeyFuncioner() Sub And Put In Your Own Code And Run Key Inputs From There
+
+
+
+
+Sub DrawCube
+  TextWindow.WriteLine("New Cube Object Set")
+  GraphicsWindow.PenColor = C
+  object = "Cube"
+  Turtle.PenUp()
+  Turtle.MoveTo(X, Y)
+  Turtle.Hide()
+  Angle = Turtle.Angle
+  
+  Turtle.Turn( 0 - Angle )
+  
+  
+  Turtle.TurnRight()
+  
+  Turtle.PenDown()
+  
+  'draw base square
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  Turtle.Hide()
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  Turtle.Hide()
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  Turtle.Hide()
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  Turtle.Hide()
+  
+  TextWindow.WriteLine("Square Face Drawn")
+  
+  'debug stuff
+  Angle = Turtle.Angle
+  
+  Turtle.Turn( 0 - Angle )
+  
+  
+  
+  Turtle.Turn(45)
+  Turtle.Move((L-10)/Z)
+  Turtle.Turn(-135)
+  Turtle.Move((L-10)/Z)
+  Turtle.Turn(-35)
+  Turtle.Move((L-5)/Z)
+  
+  Turtle.PenUp()
+  
+  'debug stuff
+  Angle = Turtle.Angle
+  Turtle.Turn( 0 - Angle )
+  
+  
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  
+  
+  Turtle.TurnRight()
+  Turtle.Move(3)
+  
+  Turtle.TurnRight()
+  Turtle.Turn(35)
+  Turtle.PenDown()
+  Turtle.Move(L/Z)
+  
+  'more debug
+  
+  Angle = Turtle.Angle
+  
+  Turtle.Turn(0 - Angle)
+  
+  
+  Turtle.Move(27)
+  
+  Turtle.PenUp()
+  
+  TextWindow.WriteLine("Cube Complete")
+  
+EndSub
+
+
+sub DrawCircle_Low
+  GraphicsWindow.PenColor = C
+  object = "Circle"
+  Turtle.PenUp()
+  Turtle.MoveTo(X, Y)
+  Turtle.Hide()
+  'output show after done
+  
+  Angle = Turtle.Angle
+  
+  for w = 1 to 24
+    Turtle.PenDown()
+    Angle = Turtle.Angle
+    Turtle.Turn(15)
+    Turtle.Move(15)
+  EndFor
+  TextWindow.WriteLine("Circle Complete")
+  
+  
+EndSub
+Turtle.PenUp()
+sub DrawSquare
+  GraphicsWindow.PenColor = C
+  object = "Square"
+  Turtle.MoveTo(X, Y)
+  Angle = Turtle.Angle
+  Turtle.Turn(0 - Angle)
+  
+  Turtle.PenDown()
+  for i = 1 to 4
+    Turtle.TurnRight()
+    Turtle.Move(L/Z)
+    Turtle.Hide()
+  EndFor
+  Turtle.PenUp()
+  
+  TextWindow.WriteLine("Square Complete")
+EndSub
+
+
+sub moveObject_right_25
+  X = X - 25  
+  GraphicsWindow.Clear()
+  reDraw()
+  TextWindow.WriteLine("Successfully Moved Object To It's Right")
+EndSub
+sub moveObject_left_25
+  X = X + 25
+  GraphicsWindow.Clear()
+  reDraw()
+  TextWindow.WriteLine("Successfully Moved Object To It's Left")
+EndSub
+sub moveObject_down_25
+  Y = Y + 25
+  GraphicsWindow.Clear()
+  reDraw()
+  TextWindow.WriteLine("Successfully Moved Object Down")
+EndSub
+sub moveObject_up_25
+  Y = Y - 25
+  GraphicsWindow.Clear()
+  reDraw()
+  TextWindow.WriteLine("Successfully Moved Object Up")
+EndSub
+
+sub reDraw
+  if(object = "Cube")then
+    DrawCube()
+  else 
+    if(object = "Circle") then
+      DrawCircle_Low()
+    else
+      if(object = "Square") then
+        DrawSquare()
+      Else
+        If(object = "Triangle")Then
+          DrawTriangle()
+        Else
+          If(object = "Parralagram") Then
+            Parralagram()
+          Else
+            If(object = "Dot") Then
+              DOT()
+            EndIf
+          EndIf
+        EndIf
+      EndIf
+    EndIf
+  EndIf
+EndSub
+
+Sub Parralagram
+  GraphicsWindow.PenColor = C
+  object = "Parralagram"
+  Turtle.MoveTo(X, Y)
+  Angle = Turtle.Angle
+  Turtle.Turn(0 - Angle)
+  
+  'Actual Parralagram Code
+  Turtle.PenDown()
+  Turtle.Turn(90)
+  Turtle.Move(L/Z)
+  Turtle.Turn(0 - A)
+  Turtle.Move((L/2)/Z)
+  Turtle.Turn(0 - Turtle.Angle)
+  Turtle.TurnLeft()
+  Turtle.Move(L/Z)
+  Turtle.Turn(0 - A)
+  Turtle.Move((L/2)/Z)
+  TextWindow.WriteLine("Parralagram Complete")
+  Turtle.PenUp()
+EndSub
+
+Sub DrawTriangle
+  GraphicsWindow.PenColor = C
+  object = "Triangle"
+  Turtle.MoveTo(X, Y)
+  Angle = Turtle.Angle
+  Turtle.Turn(0 - Angle)
+  Turtle.PenDown()
+  
+  Turtle.Turn(0 - Turtle.Angle)
+  Turtle.Turn(A)
+  Turtle.Move(L/Z)
+  Turtle.Turn(0 - Turtle.Angle)
+  Turtle.Turn((180 - A))
+  Turtle.Move(L/Z)
+  Turtle.Turn (0 - Turtle.Angle)
+  Turtle.TurnLeft()
+  Turtle.Move((L + (L/8))/Z)
+  Turtle.Hide()
+  
+  TextWindow.WriteLine("Triangle Complete")
+  
+  Turtle.PenUp()
+  
+EndSub
+
+Test()
+
+Sub Test
+  If(Test = "Tutorial") then  
+    TextWindow.Show()
+    
+    
+    ' This is the test program that runs if test = true
+    
+    TextWindow.ForegroundColor = "Green"
+    TextWindow.WriteLine("The Test Program Is Being In Use You Can Disable This In The Projects Settings By Changing Test To False The Tutorial Will Be In Green Text")
+    TextWindow.ForegroundColor = "White"
+    
+    DrawTriangle()
+    TextWindow.ForegroundColor = "Green"
+    TextWindow.WriteLine("The Test Program Drew A Triangle")
+    TextWindow.ForegroundColor = "White"
+    NewSprite()
+    TextWindow.ForegroundColor = "Green"
+    TextWindow.WriteLine("The Test Program Saved The Triangle To A Sprite Or Better Put A Group Of Shapes")
+    TextWindow.WriteLine("Sprites Act As One Group Of Shapes & Can Be Redraw At Anytime. Unlike Normal Shapes Where You Have To Manually Redraw Them")
+    TextWindow.WriteLine("I Will Now Clear The Screen")
+    GraphicsWindow.Clear()
+    TextWindow.WriteLine("I will Also Redraw the Sprite Sheet")
+    TextWindow.ForegroundColor = "White"
+    MultiRedrawSprite()
+    TextWindow.ForegroundColor = "Green"
+    TextWindow.WriteLine("Multipul Shapes Can Be Added To A Sprite For Example")
+    TextWindow.WriteLine("Y = 350")
+    TextWindow.WriteLine("X = 600")
+    TextWindow.WriteLine("Z = 1 'This Means The Scale Will Not Be Affected")
+    TextWindow.WriteLine("L = 40")
+    TextWindow.WriteLine("object = square")
+    TextWindow.WriteLine("NewSprite()")
+    TextWindow.WriteLine("LET'S RUN THIS CODE NOW!")
+    TextWindow.ForegroundColor = "White"
+    
+    
+    Y = 350
+    X = 600
+    Z = 1
+    L = 40
+    object = "Square"
+    NewSprite()
+    
+    TextWindow.ForegroundColor = "Green"
+    
+    TextWindow.WriteLine("We Can Also Load All The Shapes In Our Sprite | Do This By Typing MultiRedrawSprite() In The Code Editior")
+    
+    TextWindow.ForegroundColor = "White"
+    
+    MultiRedrawSprite()
+    
+    TextWindow.ForegroundColor = "Green"
+    
+    TextWindow.WriteLine("Just Like That You Know The Basics")
+    TextWindow.WriteLine("Useful Commands:")
+    TextWindow.WriteLine("DrawSquare() {Most Shapes Have Draw Infront Of Them Apart From Parralagrams & ColouredCubeP1; These Are Test Features Tho}")
+    TextWindow.WriteLine("NewSprite() {Make A New Sprite To G1}")
+    TextWindow.WriteLine("DOT() {Get Exact Cords Of A Possition Easily}")
+    TextWindow.WriteLine("MultiRedrawSprite() {Draws The Sprite}")
+    TextWindow.WriteLine("SR(), SU(), SL(), SD() {Moves Select Objects In A Sprite}")
+    TextWindow.WriteLine("Setup() Setup SR SU SL & SD With The S Function")
+    TextWindow.WriteLine("Z = Change Depth, X = {X pos}, Y = {Y pos}, L = {Basically Size Of The Shape}, Test = {Tutorial; Better Disable For Your Games}")
+    TextWindow.WriteLine("Object = {Any Object You Want To Set As Your Object}")
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine("If You Just Changed To This Scroll Up There Is A Guide On How To Use Pablo Graphics Libary")
+    
+    
+    
+  Else
+    If(Test = "Developer") Then
+      TextWindow.ForegroundColor = "Green"
+      
+      TextWindow.WriteLine("Displaying Developer Functions & Output")
+      
+      TextWindow.ForegroundColor = "DarkRed"
+      TextWindow.Show()
+      'This Look Like Test Code Maybe Change Test To Developer
+      DOT()
+      DrawCircle_Low()
+      DrawCube()
+      DrawCuboid()
+      DrawSquare()
+      DrawTriangle()
+      
+      NewLayeredScene()
+      NewScene()
+      NewSprite()
+      MultiRedrawSprite()
+      MouseMoveQ()
+      moveObject_down_25()
+      moveObject_right_25()
+      moveObject_up_25()
+      moveObject_left_25()
+      SD()
+      Setup()
+      SU()
+      SR()
+      SL()
+      RectDown()
+      RectRight()
+      RectUp()
+      reDraw()
+      Reload()
+      Start()
+      Test()
+      
+    Else
+      If(Test = "DevMenu") Then
+        TextWindow.Show()
+      EndIf
+      
+    endif
+    
+  Endif 
+  Turtle.PenUp()
+EndSub
+
+
+Sub Start
+  GraphicsWindow.Hide()
+  TextWindow.Top = 0
+  TextWindow.Show()
+  TextWindow.WriteLine("Using PGL " + Version)
+  Program.Delay(2500)
+  GraphicsWindow.left = 500
+  GraphicsWindow.Top = 250
+  
+  TextWindow.Hide()
+  GraphicsWindow.Hide()
+  GraphicsWindow.Title = ""
+  GraphicsWindow.Width = 750
+  GraphicsWindow.Height = 500
+  GraphicsWindow.CanResize = "false"
+  GraphicsWindow.FontSize = "35"
+  GraphicsWindow.BackgroundColor = "Black"
+  GraphicsWindow.BrushColor = "White"
+  GraphicsWindow.PenColor = "White"
+  
+  GraphicsWindow.DrawText(230,175, "Made With")
+  
+  GraphicsWindow.FontSize = "100"
+  GraphicsWindow.DrawText(225,200, "PGL1")
+  
+  Turtle.PenUp()
+  Turtle.MoveTo(550,150)
+  Turtle.Turn(45)
+  GraphicsWindow.PenWidth = 15
+  Turtle.PenDown()
+  For h = 1 To 4
+    Turtle.TurnRight()
+    Turtle.Move(75)
+  EndFor
+  Turtle.PenUp()
+  Turtle.Hide()
+  
+  Sound.PlayChime()
+  Sound.PlayClick()
+  GraphicsWindow.Show()
+  
+  Program.Delay(3500)
+  GraphicsWindow.left = 0
+  GraphicsWindow.Top = 0
+  
+  GraphicsWindow.CanResize = "true"
+  
+  GraphicsWindow.BackgroundColor = "Lightblue"
+  GraphicsWindow.BrushColor = "Black"
+  GraphicsWindow.PenColor = "Black"
+  
+  GraphicsWindow.Height = 1000
+  GraphicsWindow.Width = 5000
+  GraphicsWindow.Show()
+  TextWindow.Hide()
+  GraphicsWindow.Title = Title
+  
+  GraphicsWindow.FontSize = 10
+  
+  GraphicsWindow.Clear()
+  
+  GraphicsWindow.DrawText(0,1000, App + " Made Using PGL Version " + Version)
+  Turtle.PenUp()
+EndSub
+
+
+
+Sub keyGrabber
+  key = GraphicsWindow.LastKey
+  KeyFuncioner()
+  KeyTweeker()
+  
+EndSub
+
+Sub KeyFuncioner
+  
+  'This is a generated function add your key inputs here
+  ' i.e if you're making tetris you can add a peice of code the changes the rotation
+  
+EndSub
+
+Sub KeyTweeker
+  'This Code Here Is For High Level Commands Only
+  'Keep Your Code Neat By Not Putting It In Here
+EndSub
+
+Sub DrawCuboid
+  ' Large Cube-Boi-d
+  
+  TextWindow.WriteLine("New Cube Object Set")
+  GraphicsWindow.PenColor = C
+  object = "Cube"
+  Turtle.PenUp()
+  Turtle.MoveTo(X, Y)
+  Turtle.Hide()
+  Angle = Turtle.Angle
+  
+  Turtle.Turn( 0 - Angle )
+  
+  
+  Turtle.TurnRight()
+  
+  Turtle.PenDown()
+  
+  'draw base square
+  'Wide Square
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  Turtle.Hide()
+  Turtle.TurnRight()
+  Turtle.Move(L/Z * 2)
+  Turtle.Hide()
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  Turtle.Hide()
+  Turtle.TurnRight()
+  Turtle.Move(L/Z * 2)
+  Turtle.Hide()
+  
+  TextWindow.WriteLine("Square Face Drawn")
+  
+  'debug stuff
+  Angle = Turtle.Angle
+  
+  Turtle.Turn( 0 - Angle )
+  
+  
+  
+  Turtle.Turn(45)
+  Turtle.Move((L-10)/Z)
+  Turtle.Turn(-135)
+  Turtle.Move((L - 5)/Z * 2)
+  Turtle.Turn(-35)
+  Turtle.Move((L-5)/Z)
+  
+  Turtle.PenUp()
+  
+  'debug stuff
+  Angle = Turtle.Angle
+  Turtle.Turn( 0 - Angle )
+  
+  
+  Turtle.TurnRight()
+  Turtle.Move(L/Z * 2)
+  Turtle.TurnRight()
+  Turtle.Move(L/Z)
+  
+  
+  Turtle.TurnRight()
+  Turtle.Move(3)
+  
+  Turtle.TurnRight()
+  Turtle.Turn(35)
+  Turtle.PenDown()
+  Turtle.Move(L/Z)
+  
+  'more debug
+  
+  Angle = Turtle.Angle
+  
+  Turtle.Turn(0 - Angle)
+  
+  
+  Turtle.Move(27)
+  
+  Turtle.PenUp()
+  
+  TextWindow.WriteLine("Cubiod Complete")
+  
+EndSub
+
+Sub MultiRedrawSprite
+  
+  Turtle.PenUp()
+  Turtle.MoveTo(X, Y)
+  Turtle.Hide()
+  Angle = Turtle.Angle
+  
+  Turtle.Turn( 0 - Angle )
+  
+  For e = 0 To  i
+    ' Redraw All Your Sprites You Made
+    'Kinda Breaks If You Haven't Made A sprite
+    TextWindow.WriteLine("Load Sprite " + Sprites_G1[e])
+    Turtle.MoveTo(SpritesX_G1[e], SpritesY_G1[e])
+    X = SpritesX_G1[e]
+    Y = SpritesY_G1[e]
+    object = Sprites_G1[e]
+    Z = SpritesZ_G1[e]
+    reDraw()
+    
+  EndFor
+  
+EndSub
+
+Sub NewSprite
+  ' Code To Make A New Sprite
+  ' Take Current Settings Put In Array
+  Sprites_G1[i + 1] = object
+  SpritesX_G1[i + 1] = X
+  SpritesY_G1[i + 1] = Y
+  SpritesZ_G1[i + 1] = Z
+  i = i + 1
+  For e = 1 To i
+    ' Tell User Stuff
+    TextWindow.WriteLine(Sprites_G1[e])
+    TextWindow.WriteLine(SpritesX_G1[e])
+    TextWindow.WriteLine(SpritesY_G1[e])
+    TextWindow.WriteLine(SpritesZ_G1[e])
+  EndFor
+  TextWindow.WriteLine("New Sprite Saved")
+  
+EndSub
+
+Sub DOT
+  ' It Not A Dot Just A Small Square
+  object = "Dot"
+  GraphicsWindow.PenColor = C
+  
+  Turtle.PenUp()
+  Turtle.MoveTo(X, Y)
+  Turtle.Hide()
+  Angle = Turtle.Angle
+  
+  Turtle.Turn(0 - Angle)
+  Turtle.PenDown()
+  
+  For w = 1 To 4
+    Turtle.TurnRight()
+    Turtle.Move(3)
+  EndFor
+  
+  Turtle.PenUp()
+EndSub
+
+Sub Setup
+  ' Setup
+  S = ""
+  IDC = 0
+  PX = Mouse.MouseX
+  PY = Mouse.MouseY
+  MMT = "True"
+EndSub
+
+'Stuff That Look Confusing But Isn't \/
+
+Sub SR
+  For i = 1 To Array.GetItemCount(Sprites_G1)
+    If(Sprites_G1[i] = S) Then
+      SpritesX_G1[i] = SpritesX_G1[i] + L
+    EndIf
+  EndFor
+EndSub
+
+Sub SL
+  For i = 1 To Array.GetItemCount(Sprites_G1)
+    If(Sprites_G1[i] = S) Then
+      SpritesX_G1[i] = SpritesX_G1[i] - L
+    EndIf
+  EndFor
+EndSub
+
+Sub SD
+  For i = 1 To Array.GetItemCount(Sprites_G1)
+    If(Sprites_G1[i] = S) Then
+      SpritesY_G1[i] = SpritesY_G1[i] + L
+    EndIf
+  EndFor
+EndSub
+
+Sub SU
+  For i = 1 To Array.GetItemCount(Sprites_G1)
+    If(Sprites_G1[i] = S) Then
+      SpritesY_G1[i] = SpritesY_G1[i] - L
+    EndIf
+  EndFor
+EndSub
+
+Sub GravitySprite
+  'Code
+  object = object
+  GraphicsWindow.PenColor = C
+  NewSprite()
+  
+  'Enable S Function
+  Setup()
+  'What You Wanna Move?
+  S = object
+  
+  While(SpritesY_G1[0] > 1)
+    'Move Down
+    SD()
+    'Redraw
+    MultiRedrawSprite()
+  EndWhile
+EndSub
+
+Sub SaveSprFile
+  'You Need To Change The Location For Your Computor
+  ID = Math.GetRandomNumber(999999)
+  
+  File.WriteLine(PATH + ID +"_object.data",1 , "") 'Write Content
+  
+  File.WriteContents(PATH + ID +"_object.data", Sprites_G1) 'Save Array
+  
+  txt = File.ReadLine(PATH + ID + "_object.data",1) 'Read Contents
+  
+  File.WriteLine(PATH + ID +"_Xlevel.data",1 , "") 'Write Content
+  
+  File.WriteContents(PATH + ID +"_Xlevel.data", SpritesX_G1) 'Save Array
+  
+  txt = File.ReadLine(PATH + ID + "_Xlevel.data",1) 'Read Contents
+  
+  File.WriteLine(PATH + ID +"_Ylevel.data",1 , "") 'Write Content
+  
+  File.WriteContents(PATH + ID +"_YLevel.data", SpritesY_G1) 'Save Array
+  
+  txt = File.ReadLine(PATH + ID + "_Ylevel.data",1) 'Read Contents
+  
+  File.WriteLine(PATH + ID +"_Zlevel.data",1 , "") 'Write Content
+  
+  File.WriteContents(PATH + ID +"_Zlevel.data", SpritesZ_G1) 'Save Array
+  
+  txt = File.ReadLine(PATH + ID + "_Zlevel.data",1) 'Read Contents
+  
+EndSub
+
+Sub LoadSprFile
+  Sprites_G1 = File.ReadContents(PATH + IDC + "_object.data") ' read
+  
+  TextWindow.WriteLine(Sprites_G1) ' tell user
+  
+  SpritesX_G1 = File.ReadContents(PATH + IDC + "_Xlevel.data") 'read
+  
+  TextWindow.WriteLine(SpritesZ_G1) ' tell user/ You get it now
+  
+  SpritesY_G1 = File.ReadContents(PATH + IDC + "_Ylevel.data")
+  
+  TextWindow.WriteLine(SpritesY_G1)
+  
+  SpritesZ_G1 = File.ReadContents(PATH + IDC + "_Zlevel.data")
+  
+  TextWindow.WriteLine(SpritesZ_G1)
+  
+EndSub       
+
+'Code on how to use spr files with .data format you first do setup Get the IDC value load and redraw if you want to redraw
+
+'Setup()
+'IDC = "517978"
+'LoadSprFile()
+'MultiRedrawSprite()
+
+Sub NewScene
+  
+  GraphicsWindow.Clear()
+  Setup()
+  LoadSprFile()
+  MultiRedrawSprite()
+EndSub
+
+Sub NewLayeredScene
+  
+  Setup()
+  LoadSprFile()
+  MultiRedrawSprite()
+EndSub
+
+
+Sub HideMouse
+  Mouse.HideCursor()
+EndSub
+
+Sub ShowMouse
+  Mouse.ShowCursor()
+EndSub
+
+Sub MouseMoveQ
+  If(PX = Mouse.MouseX)Then
+    MMT = "False"
+  Else
+    MMT = "True"
+    TextWindow.WriteLine("Mouse Moved N=" + n + "The Mouse Moved " + (PX - Mouse.MouseX) + " Left")
+    n = n + 1
+  EndIf
+  
+  If(PY = Mouse.MouseY)Then
+    MMT = "False"
+  Else
+    MMT = "True"
+    TextWindow.WriteLine("Mouse Moved N=" + n + "The Mouse Moved " + (PY - Mouse.MouseY) + " Upwards")
+    n = n + 1
+  EndIf
+  
+  PX = Mouse.MouseX
+  PY = Mouse.MouseY
+  
+EndSub
+
+Sub Reload
+  MultiRedrawSprite()
+  Start()
+  Setup()
+EndSub
+
+'Rectangles Are Not Objects
+'Rectangles Are Part Of The Scene They Cannot Be Interacted With By The User
+'They Can Be Used As Objects If  Void Mesh Is Made Using And Array T0 Check If It's In The Area They Return
+
+Sub RectDown
+  
+  Turtle.PenUp()
+  Turtle.MoveTo(X, Y)
+  Turtle.Hide()
+  Angle = Turtle.Angle
+  
+  Turtle.Turn( 0 - Angle )
+  
+  GraphicsWindow.FillRectangle(X,Y,(X+L),GraphicsWindow.Height)
+EndSub     
+
+Sub RectUp
+  
+  Turtle.PenUp()
+  Turtle.MoveTo(X, Y)
+  Turtle.Hide()
+  Angle = Turtle.Angle
+  
+  Turtle.Turn( 0 - Angle )
+  
+  GraphicsWindow.FillRectangle(X,Y,(X+L),0)
+EndSub   
+
+Sub RectRight
+  
+  Turtle.PenUp()
+  Turtle.MoveTo(X, Y)
+  Turtle.Hide()
+  Angle = Turtle.Angle
+  
+  Turtle.Turn( 0 - Angle )
+  
+  GraphicsWindow.FillRectangle(X,Y,GraphicsWindow.Width,(Y+L))
+EndSub

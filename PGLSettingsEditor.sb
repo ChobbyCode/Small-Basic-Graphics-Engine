@@ -1,0 +1,179 @@
+GraphicsWindow.Show() 
+GraphicsWindow.Height = 200
+GraphicsWindow.Width = 250
+GraphicsWindow.CanResize = "false"
+GraphicsWindow.Title = "PGL Setting Version 1"
+GraphicsWindow.Left = 650
+GraphicsWindow.Top = 350
+GraphicsWindow.BackgroundColor = "lightblue"
+
+'This program is used for testing only
+
+PATH = Program.Directory
+VersionSupported = File.ReadLine(PATH + "\client\version\version.data",1)
+Version = 1
+updatedversion = VersionSupported[0]
+
+TextWindow.Show()
+TextWindow.Clear()
+TextWindow.WriteLine(File.GetDirectories(PATH + "\repos"))
+TextWindow.WriteLine("Keep Blank If You Need To Make A File...")
+TextWindow.Write("What File Would You Like To Open...")
+Name = TextWindow.Read()
+TextWindow.Hide()
+
+If(Name = "")then
+  Noopen()
+Else
+  lines = File.ReadLine(PATH + "\repos\" + Name + "\data\settings.data",1)
+  GraphicsWindow.Title = "PGL Setting Version 1 |" + " Editting " + Name
+  
+  If(lines[0] = "true")then  
+    GraphicsWindow.Hide()
+    GraphicsWindow.ShowMessage("You Don't Have Permission To Use This Program. You Can Still Use The File Fixer Instead.", "Permission Low Level")
+    SimpleMenu()
+  Else
+    If(lines[0] = "false")then  
+      if(VersionSupported[0] > Version)Then
+        GraphicsWindow.ShowMessage("You Are Using Version " + Version + " Of The Settings Manager. The Current Reccommended Is " + updatedversion + ". Please Update The Settings Manager","Outdated Client Warrning")
+      endif 
+      MainMenu()
+    Else
+      GraphicsWindow.Hide()
+      GraphicsWindow.ShowMessage("Unable To Read Project Settings. Running File Fixer","Error")
+      lines[0] = "true"
+      File.WriteContents(PATH + "\data\settings.data", lines)
+      GraphicsWindow.ShowMessage("Successfully Fixed File. Now Exitting Program","FileFixer")
+      Program.End()
+    endif
+  endif
+endif
+
+
+Sub MainMenu
+  butExit = Controls.AddButton("Exit",220,180)
+  
+  butPublish = Controls.AddButton("Publish",10,180)
+  butRunFix = Controls.AddButton("Run The File Fixer",10,10)
+  butNew = Controls.AddButton("New Project",10,50)
+  butOpen = Controls.AddButton("Open",200,10)
+  
+EndSub
+
+Sub SimpleMenu
+  GraphicsWindow.Show()
+  butExit = Controls.AddButton("Exit",220,180)
+  butRunFix = Controls.AddButton("Run The File Fixer",10,180)
+  butOpen = Controls.AddButton("Open",200,10)
+  
+EndSub
+
+Sub Noopen
+  butRunFix = Controls.AddButton("Run The File Fixer",10,10)
+  butNew = Controls.AddButton("New Project",10,50)
+  butOpen = Controls.AddButton("Open",200,10)
+EndSub
+
+Controls.ButtonClicked = getButton
+
+
+Sub getButton
+  lastbutton = Controls.LastClickedButton
+  If(lastbutton = butExit)Then
+    Program.End()
+  Else
+    If(lastbutton = butRunFix)Then
+      lines[0] = "false"
+      File.WriteContents(PATH + "\repos\" + Name + "\data\settings.data", lines)
+      GraphicsWindow.ShowMessage("Successfully Fixed Files.","FileFixer")
+    Else
+      If(lastbutton = butPublish)Then     
+        lines[0] = "true"
+        File.WriteContents(PATH + "\repos\" + Name + "\data\settings.data", lines)
+        GraphicsWindow.ShowMessage("Ouput Location "+ PATH + "\repos\" + Name + "\ Your Project Has Automatically Been Named Small Basic 3D Engine.exe", "Publisher")
+      Else
+        If(lastbutton = butNew)Then
+          TextWindow.Show()
+          TextWindow.Clear()
+          TextWindow.Write("Please Name Your Game...")
+          Name = TextWindow.Read()
+          
+          File.DeleteDirectory(PATH + "\repos\" + Name)
+          File.CreateDirectory(PATH + "\repos\" + Name)
+          File.CopyFile(PATH + "\client\version", PATH + "\Output")
+          File.CreateDirectory(PATH + "\repos\" + Name + "\data")
+          File.CreateDirectory(PATH + "\repos\" + Name + "\data\Legal")
+          File.CopyFile(PATH + "\data\settings.data", PATH + "\repos\" + Name + "\data")
+          File.CopyFile(PATH + "\data\legal\README.ME", PATH + "\repos\" + Name + "\data\Legal")
+          
+          File.CreateDirectory(PATH + "\repos\" + Name + "\PGL.config")
+          File.CreateDirectory(PATH + "\repos\" + Name + "\PGL.config\Settings")
+          File.CreateDirectory(PATH + "\repos\" + Name + "\Sample")
+          
+          'Does need to be imported
+          'File.CreateDirectory(PATH + "\repos\Sample\Boom.sfx")
+          'File.CreateDirectory(PATH + "\repos\Sample\Gun.sfx")
+          'File.CreateDirectory(PATH + "\repos\Sample\Hurt.sfx")
+          'File.CreateDirectory(PATH + "\repos\Sample\sample")
+          'File.CreateDirectory(PATH + "\repos\Sample\Select.sfx")
+          'File.CreateDirectory(PATH + "\repos\Sample\Textures")
+          'File.CopyFile(PATH + "\Sample\Boom.sfx\explosion.mp3", PATH + "\repos\Sample\Boom.sfx")  
+          'File.CopyFile(PATH + "\Sample\Boom.sfx\laserShoot.wav", PATH + "\repos\Sample\Gun.sfx") 
+          'File.CopyFile(PATH + "\Sample\Boom.sfx\hitHurt.wav", PATH + "\repos\Sample\Hurt.sfx")   
+          'File.CopyFile(PATH + "\Sample\Boom.sfx\synth.wav", PATH + "\repos\Sample\sample")
+          'File.CopyFile(PATH + "\Sample\Boom.sfx\blipSelect.wav", PATH + "\repos\Sample\Select.sfx")    
+          
+          File.CreateDirectory(PATH + "\repos\" + Name + "\Small Basic 3D Engine")
+          File.CopyFile(PATH + "\engine\Small Basic 3D Engine.exe - Shortcut", PATH + "\repos\" + Name)    
+          File.CopyFile(PATH + "\engine\PGL.config\Build.data", PATH + "\repos\" + Name + "\PGL.config")   
+          File.CopyFile(PATH + "\engine\Small Basic 3D Engine.pdb", PATH + "\repos\" + Name)
+          File.CopyFile(PATH + "\engine\Small Basic 3D Engine.sb", PATH + "\repos\" + Name)      
+          File.CopyFile(PATH + "\engine\SmallBasicLibrary.dll", PATH + "\repos\" + Name)
+          File.CopyFile(PATH + "\engine\Small Basic 3D Engine.exe", PATH + "\repos\" + Name)          
+          
+          GraphicsWindow.ShowMessage("New Project Made | Output " + PATH + "\repos\" + Name ,"Builder")
+          TextWindow.Hide()
+        Else
+          If(lastbutton = butOpen)Then
+            
+            GraphicsWindow.Clear()
+            TextWindow.Show()
+            TextWindow.Clear()
+            TextWindow.Write("Please Name Your Game...")
+            Name = TextWindow.Read()
+            TextWindow.Hide()
+            If(Name = "")then
+              Noopen()
+            Else
+              lines = File.ReadLine(PATH + "\repos\" + Name + "\data\settings.data",1)
+              GraphicsWindow.Title = "PGL Setting Version 1 |" + " Editting " + Name
+              
+              If(lines[0] = "true")then  
+                GraphicsWindow.Hide()
+                GraphicsWindow.ShowMessage("You Don't Have Permission To Use This Program. You Can Still Use The File Fixer Instead.", "Permission Low Level")
+                SimpleMenu()
+              Else
+                If(lines[0] = "false")then  
+                  if(VersionSupported[0] > Version)Then
+                    GraphicsWindow.ShowMessage("You Are Using Version " + Version + " Of The Settings Manager. The Current Reccommended Is " + updatedversion + ". Please Update The Settings Manager","Outdated Client Warrning")
+                  endif 
+                  MainMenu()
+                Else
+                  GraphicsWindow.Hide()
+                  GraphicsWindow.ShowMessage("Unable To Read Project Settings. Running File Fixer","Error")
+                  lines[0] = "true"
+                  File.WriteContents(PATH + "\data\settings.data", lines)
+                  GraphicsWindow.ShowMessage("Successfully Fixed File. Now Exitting Program","FileFixer")
+                  Program.End()
+                endif
+              endif
+            endif
+          else
+            GraphicsWindow.ShowMessage("Unable To Complete Function", "Error")
+          EndIf
+        EndIf
+      EndIf
+    EndIf
+  EndIf
+EndSub
+            
